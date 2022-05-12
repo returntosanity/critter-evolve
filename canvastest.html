@@ -5,9 +5,11 @@
 </head>
 <body>
 <div id="test"></div>
+<button type="button" name="button1" onclick="randomRect('Yellow')">New Yellow</button>
+<button type="button" name="button2" onclick="randomRect('Red')">New Red</button>
 <script>
-var world_size=800;
-var boxsize= 4;
+var world_size=670;
+var boxsize= 10;
 var posX=2;
 var posY=0;
 
@@ -18,6 +20,11 @@ drawRect(c, boxsize, posX, posY,"N", "red");
 drawRect(c, boxsize, 3, 3,"E", "green");
 drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R", "yellow"); 
 drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R","yellow");
+
+function randomRect(color)
+{
+drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "M",color);
+}
 
 function createCanvas(w_size, node)
 {
