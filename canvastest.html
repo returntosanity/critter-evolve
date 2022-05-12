@@ -2,28 +2,22 @@
 <html>
 <head>
 <title>Canvas Testing</title>
-<script src="js/critter.js" charset="utf-8"></script>
-<script src="js/world.js" charset="utf-8"></script>
-<link rel="stylesheet" href="CSS/styles.css">
 </head>
 <body>
 <div id="test"></div>
 <script>
 var world_size=800;
-var boxsize= 30;
-var posX=5;
+var boxsize= 4;
+var posX=2;
 var posY=0;
 
 createCanvas(world_size, document.getElementById("test"));
 var c = document.getElementById("newCanvas");
 drawGrid(c, boxsize);
-drawRect(c, boxsize, posX, posY, "red");
-drawRect(c, boxsize, 4, 8, "green");
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "yellow"); 
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "yellow");
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "yellow");
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "yellow");
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "yellow");
+drawRect(c, boxsize, posX, posY,"N", "red");
+drawRect(c, boxsize, 3, 3,"E", "green");
+drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R", "yellow"); 
+drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R","yellow");
 
 function createCanvas(w_size, node)
 {
@@ -56,11 +50,12 @@ drawLine(0,canvas.height/size*i,canvas.width,canvas.height/size*i);
 }
 }
 
-function drawRect(canvas, b_size, xB, yB, color)
+function drawRect(canvas, b_size, xB, yB, orientation, color)
 {
 var size= canvas.width/b_size;
 var xCoord = canvas.width/b_size*xB;
 var yCoord = canvas.height/b_size*yB;
+
 
 console.log("drawRect called. Params: \nxB= "+ xB + "\nyB= "+yB+"\nsize= "+size);
 var ctx = canvas.getContext("2d");
@@ -68,6 +63,11 @@ ctx.beginPath();
 ctx.rect(xCoord, yCoord, size, size);
 ctx.fillStyle = color;
 ctx.fill();
+ctx.fillStyle = "black";
+ctx.font = "bold "+size/2+"px Arial";
+ctx.textAlign = "center";
+ctx.textBaseline = 'middle';
+ctx.fillText(orientation, xCoord+ size/2,yCoord + size /2);
 ctx.lineWidth = "4";
 ctx.strokeStyle = "black";
 ctx.stroke();
