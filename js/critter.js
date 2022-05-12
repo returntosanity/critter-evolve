@@ -11,9 +11,9 @@ class Critter {
       this.steps=0;
         
       //basic movement
-      this.walk_forward = function(var w_width, var w_height){
+      this.walk_forward = function(w_width, w_height){
         if(this.orientation == "N"){
-            if(this.posY-- < 0 || this.posY-- > w_height){
+            if(this.posY == 0){
             console.log("Ouch! Walked into a wall");}
             else{
             this.posY--;
@@ -23,15 +23,30 @@ class Critter {
 
         }
         if(this.orientation == "E"){
+			if(this.posX == w_width){
+            console.log("Ouch! Walked into a wall");}
+            else{
             this.posX++;
+            this.steps++;
+            }	
         }
         if(this.orientation == "S"){
+            if(this.posY == w_height){
+            console.log("Ouch! Walked into a wall");}
+            else{
             this.posY++;
+            this.steps++;
+            }			
         }
         if(this.orientation == "W"){
+			if(this.posX == 0){
+            console.log("Ouch! Walked into a wall");}
+            else{
             this.posX--;
+            this.steps++;
+            }				
+            
         }
-        this.steps++;
       };
       this.turn_right = function(){
         if(this.orientation == "N"){this.orientation= "E";}
@@ -47,11 +62,12 @@ class Critter {
       };
 
     }
+}
     //actions
     //basic movement
 
 
-
+/*
 //properties ... determined by genes?
 var vision = 1; //how far a critter can see
 var sex= true; //true= male false= female
@@ -74,30 +90,23 @@ var age;
 var size;
 var speed; //for running away, taxing on hunger
 var remembered_locations;
-
+*/
 
 /*
-
-
 //interactions with enviornment
 eat
 carry
 drop
 expel_pheromone
 smell_pheromone
-
 //interactions with other critters
 asses_critter
-
 mate
 fight
 intimidate
 intimidated
-
 //memory
 remember_location
 plot_route
-
 //genes
-
 */
