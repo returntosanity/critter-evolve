@@ -8,11 +8,30 @@ class Critter {
       this.posX=0;
       this.posY=0;
       this.orientation="E";
-      this.walk_forward = function(){
-        if(this.orientation == "N"){this.posY--;}
-        if(this.orientation == "E"){this.posX++;}
-        if(this.orientation == "S"){this.posY++;}
-        if(this.orientation == "W"){this.posX--;}
+      this.steps=0;
+        
+      //basic movement
+      this.walk_forward = function(var w_width, var w_height){
+        if(this.orientation == "N"){
+            if(this.posY-- < 0 || this.posY-- > w_height){
+            console.log("Ouch! Walked into a wall");}
+            else{
+            this.posY--;
+            this.steps++;
+            }
+                
+
+        }
+        if(this.orientation == "E"){
+            this.posX++;
+        }
+        if(this.orientation == "S"){
+            this.posY++;
+        }
+        if(this.orientation == "W"){
+            this.posX--;
+        }
+        this.steps++;
       };
       this.turn_right = function(){
         if(this.orientation == "N"){this.orientation= "E";}
@@ -20,20 +39,18 @@ class Critter {
         else if(this.orientation == "S"){this.orientation= "W";}
         else if(this.orientation == "W"){this.orientation= "N";}
       };
+      this.turn_left = function(){
+        if(this.orientation == "N"){this.orientation= "W";}
+        else if(this.orientation == "E"){this.orientation= "N";}
+        else if(this.orientation == "S"){this.orientation= "E";}
+        else if(this.orientation == "W"){this.orientation= "S";}
+      };
 
     }
     //actions
     //basic movement
 
-  }
-  function walk_forward_alt(orientation)
-  {
-    if(orientation == "N"){this.posY--;}
-    if(orientation == "E"){this.posX++;}
-    if(orientation == "S"){this.posY--;}
-    if(orientation == "W"){this.posX++;}
 
-  }
 
 //properties ... determined by genes?
 var vision = 1; //how far a critter can see
@@ -55,16 +72,11 @@ var health = 100;
 var hunger; //replenished by food, decreased by steps, higher speeds
 var age;
 var size;
-var steps;
 var speed; //for running away, taxing on hunger
 var remembered_locations;
 
 
 /*
-
-walk_backward
-turn_left
-turn_right
 
 
 //interactions with enviornment
