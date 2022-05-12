@@ -7,24 +7,22 @@
 <div id="test"></div>
 <button type="button" name="button1" onclick="randomRect('Yellow')">New Yellow</button>
 <button type="button" name="button2" onclick="randomRect('Red')">New Red</button>
+<p></p>
+<input type="text" id="map_size" name="name1" placeholder="canvas size"><input type="text" id="b_size" name="name2" placeholder="boxes">
+<button type="button" name="button3" onclick="redraw()">Refresh</button>
 <script>
 var world_size=670;
 var boxsize= 10;
 var posX=2;
 var posY=0;
-
+var boxes= document.getElementById("b_size").value;
 createCanvas(world_size, document.getElementById("test"));
 var c = document.getElementById("newCanvas");
 drawGrid(c, boxsize);
 drawRect(c, boxsize, posX, posY,"N", "red");
 drawRect(c, boxsize, 3, 3,"E", "green");
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R", "yellow"); 
+drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R", "yellow");
 drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R","yellow");
-
-function randomRect(color)
-{
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "M",color);
-}
 
 function createCanvas(w_size, node)
 {
@@ -41,13 +39,14 @@ function drawGrid(canvas, size)
 function drawLine(xB, yB, xE,yE)
 {
 var ctx = canvas.getContext("2d");
+ctx.lineWidth = "1";
 ctx.beginPath();
 ctx.moveTo(xB, yB);
 ctx.lineTo(xE, yE);
 ctx.stroke();
 }
 
-for (let i = 0; i < size+1; i++) { 
+for (let i = 0; i < size+1; i++) {
 drawLine(canvas.width/size*i,0,canvas.width/size*i,canvas.height);
 }
 
@@ -80,7 +79,38 @@ ctx.strokeStyle = "black";
 ctx.stroke();
 }
 
-function randomInt(max) 
+function refreshCanvas(canvas)
+{
+  var size= document.getElementById("map_size").value;
+
+  canvas.height= size;
+  canvas.width= size;
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+//Buttons
+function randomRect(color)
+{
+  console.log(boxes);
+  if(boxes.length > 0)
+{drawRect(c, boxes, randomInt(boxes-1), randomInt(boxes-1), "M",color);}
+else {
+  drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "M",color);
+}
+}
+function redraw()
+{
+  boxes= document.getElementById("b_size").value;
+  refreshCanvas(c);
+  drawGrid(c, boxes);
+}
+
+function randomInt(max)
+{ // min and max included
+  return Math.floor(Math.random() * (max - 0 + 1) + 0)
+}
+function randomInt(max)
 { // min and max included
   return Math.floor(Math.random() * (max - 0 + 1) + 0)
   }
