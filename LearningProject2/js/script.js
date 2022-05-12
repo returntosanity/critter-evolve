@@ -1,8 +1,35 @@
 
 //document.addEventListener("click",jump);
+var gameArea= document.getElementById("mainCanvas");
+var player= document.createElement('div');
+player.id="character";
+gameArea.appendChild(player);
+
+document.addEventListener("keydown", readImput);
+
+function readImput(e){
+  console.log("key pressed"+ e.code);
+  if(e.code=="ArrowDown" || e.code=="KeyS")
+  {player.style.top = player.offsetTop + 10 + 'px';
+  }
+  if(e.code=="ArrowUp" || e.code=="KeyW")
+  {player.style.top = player.offsetTop - 10 + 'px';
+  }
+  if(e.code=="ArrowLeft" || e.code=="KeyA")
+  {player.style.left = player.offsetLeft - 10 + 'px';
+  }
+  if(e.code=="ArrowRight" || e.code=="KeyD")
+  {player.style.left = player.offsetLeft + 10 + 'px';
+  }
+  if(e.code=="KeyX")
+  {player.style.rotate= 90;
+  }
+}
+
+/*
+
 document.addEventListener("keydown", readImput);
 document.addEventListener('keyup', stopMove);
-
 
 function startGame() {
   myGameArea.start();
@@ -99,4 +126,4 @@ function moveright() {
 function stopMove() {
   playerObject.speedX = 0;
   playerObject.speedY = 0;
-}
+}*/
