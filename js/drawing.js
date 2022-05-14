@@ -60,7 +60,7 @@ var xCoord = canvas.width/b_size*xB;
 var yCoord = canvas.height/b_size*yB;
 
 
-console.log("drawRect called. Params: \nxB= "+ xB + "\nyB= "+yB+"\nsize= "+size);
+//console.log("drawRect called. Params: \nxB= "+ xB + "\nyB= "+yB+"\nsize= "+size);
 var ctx = canvas.getContext("2d");
 ctx.beginPath();
 ctx.rect(xCoord, yCoord, size, size);
@@ -85,7 +85,7 @@ function refreshCanvas(canvas)
 //Buttons
 function randomRect(canvas, boxsize, color)
 {
-  console.log(boxsize);
+  //console.log(boxsize);
   if(boxsize.length > 0)
 {drawRect(canvas, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "A",color);}
 else {

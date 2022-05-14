@@ -13,6 +13,7 @@ function start()
   document.getElementById("start").hidden=true;
   drawRect(document.getElementById("newCanvas"), boxsize, c1.posX, c1.posY, c1.orientation, "red");
   document.getElementById("logtitle").style.visibility="visible";
+  autoStart();
 }
 
 function walk()
@@ -20,7 +21,7 @@ function walk()
   c1.walk_forward(boxsize-1, boxsize-1);
   redraw(document.getElementById("newCanvas"), boxsize);
   drawRect(document.getElementById("newCanvas"), boxsize, c1.posX, c1.posY, c1.orientation, "red");
-  console.log(c1);
+  //console.log(c1);
 }
 
 function turnR()
@@ -28,14 +29,14 @@ function turnR()
   c1.turn_right();
   redraw(document.getElementById("newCanvas"), boxsize);
   drawRect(document.getElementById("newCanvas"), boxsize, c1.posX, c1.posY, c1.orientation, "red");
-  console.log(c1);
+  //console.log(c1);
 }
 function turnL()
 {
   c1.turn_left();
   redraw(document.getElementById("newCanvas"), boxsize);
   drawRect(document.getElementById("newCanvas"), boxsize, c1.posX, c1.posY, c1.orientation, "red");
-  console.log(c1);
+  //console.log(c1);
 }
 
 function randomAction()
@@ -45,20 +46,20 @@ function randomAction()
   }
 
 var rndInt = randomIntFromInterval(1, 6)
-console.log(rndInt)
+//console.log(rndInt)
 if(rndInt<=4)
 {
-	console.log("decided to walk a bit")
+	//console.log("decided to walk a bit")
   writeLog("decided to walk a bit");
 	walk();
 }
 if(rndInt==5)
 {turnR();
-console.log("decided to turn right");
+//console.log("decided to turn right");
 writeLog("decided to turn right");}
 if(rndInt==6)
 {turnL();
-console.log("decided to turn left");
+//console.log("decided to turn left");
 writeLog("decided to turn left");}
 }
 function randomInt(max)
@@ -71,11 +72,21 @@ function writeLog(message)
   myelem.className="logmessage";
   myelem.innerText= message;
   var logdiv= document.getElementById("log");
-  if(logdiv.childElementCount>=10)
+  if(logdiv.childElementCount>=14)
   {
     logdiv.removeChild(logdiv.children[1]);
   }
   logdiv.appendChild(myelem);
 
 
+}
+var interval;
+function autoStart()
+{
+  interval= setInterval(randomAction, 100);
+}
+function autoStop()
+{
+  clearInterval(interval);
+  writeLog("stopped");
 }

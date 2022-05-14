@@ -14,7 +14,7 @@ class Critter {
       this.walk_forward = function(w_width, w_height){
         if(this.orientation == "N"){
             if(this.posY == 0){
-            console.log("Ouch! Walked into a wall");
+            //console.log("Ouch! Walked into a wall");
             writeLog("Ouch! Walked into a wall");}
             else{
             this.posY--;
@@ -25,7 +25,7 @@ class Critter {
         }
         if(this.orientation == "E"){
 			if(this.posX == w_width){
-            console.log("Ouch! Walked into a wall");
+            //console.log("Ouch! Walked into a wall");
           writeLog("Ouch! Walked into a wall");}
             else{
             this.posX++;
@@ -34,7 +34,7 @@ class Critter {
         }
         if(this.orientation == "S"){
             if(this.posY == w_height){
-            console.log("Ouch! Walked into a wall");
+            //console.log("Ouch! Walked into a wall");
           writeLog("Ouch! Walked into a wall");}
             else{
             this.posY++;
@@ -43,7 +43,7 @@ class Critter {
         }
         if(this.orientation == "W"){
 			if(this.posX == 0){
-            console.log("Ouch! Walked into a wall");
+            //console.log("Ouch! Walked into a wall");
           writeLog("Ouch! Walked into a wall");}
             else{
             this.posX--;
