@@ -1,0 +1,10 @@
+.AAA
+{
+  float: left;
+  padding: 10px;
+}
+#logtitle
+{
+  font-weight: bold;
+  visibility: hidden;
+}

@@ -27,7 +27,7 @@ var ca= document.createElement("canvas");
 ca.id="newCanvas";
 ca.width = w_size;
 ca.height= w_size;
-ca.style.border ="1px solid #d3d3d3";
+ca.style.border ="4px solid #000";//#d3d3d3
 document.getElementById(nodeId).appendChild(ca);
 }
 
