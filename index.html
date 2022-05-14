@@ -3,18 +3,21 @@
 <title>Testing</title>
 <script src="js/critter.js" charset="utf-8"></script>
 <script src="js/world.js" charset="utf-8"></script>
+<script src="js/drawing.js" charset="utf-8"></script>
 <link rel="stylesheet" href="CSS/styles.css">
 </head>
 
 <body>
+  <div id="map">
+
+  </div>
 <div class="controls">
 
+<button id= "start" type="button" name="start" onclick="start()">Start</button>
   <button type="button" name="button" onclick="walk()">Walk</button>
   <button type="button" name="button3" onclick="turnL()">Left</button>
   <button type="button" name="button2" onclick="turnR()">Right</button>
   <button type="button" name="button4" onclick="randomAction()">Random</button>
 </div>
-<div id="map">
 
-</div>
 </body>

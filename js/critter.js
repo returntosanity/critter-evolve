@@ -4,10 +4,10 @@ What does it mean to be a critter?
 class Critter {
 
 
-    constructor() {
-      this.posX=0;
-      this.posY=0;
-      this.orientation="E";
+    constructor(x,y,direction) {
+      this.posX=x;
+      this.posY=y;
+      this.orientation=direction;
       this.steps=0;
         
       //basic movement
@@ -19,7 +19,7 @@ class Critter {
             this.posY--;
             this.steps++;
             }
-                
+
 
         }
         if(this.orientation == "E"){
@@ -28,7 +28,7 @@ class Critter {
             else{
             this.posX++;
             this.steps++;
-            }	
+            }
         }
         if(this.orientation == "S"){
             if(this.posY == w_height){
@@ -36,7 +36,7 @@ class Critter {
             else{
             this.posY++;
             this.steps++;
-            }			
+            }
         }
         if(this.orientation == "W"){
 			if(this.posX == 0){
@@ -44,8 +44,8 @@ class Critter {
             else{
             this.posX--;
             this.steps++;
-            }				
-            
+            }
+
         }
       };
       this.turn_right = function(){
