@@ -17,7 +17,7 @@ function drawMap(size, boxsize, nodeId)
 
   createCanvas(size, nodeId);
   let canvas = document.getElementById("newCanvas");
-  drawGrid(canvas, boxsize);
+  //drawGrid(canvas, boxsize);
 
 }
 
@@ -103,7 +103,7 @@ drawRect(canvas, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "B",color)
 function redraw(canvas, boxsize, critterList)
 {
   refreshCanvas(canvas);
-  drawGrid(canvas, boxsize);
+  //drawGrid(canvas, boxsize);
   redrawRects(canvas, boxsize, critterList);
 }
 
