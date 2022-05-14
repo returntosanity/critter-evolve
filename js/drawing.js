@@ -53,24 +53,24 @@ drawLine(0,canvas.height/size*i,canvas.width,canvas.height/size*i);
 }
 }
 
-function drawRect(canvas, b_size, xB, yB, orientation, color)
+function drawRect(canvas, b_size, critter)//, xB, yB, orientation, color)
 {
 var size= canvas.width/b_size;
-var xCoord = canvas.width/b_size*xB;
-var yCoord = canvas.height/b_size*yB;
+var xCoord = canvas.width/b_size*critter.posX;//xB;
+var yCoord = canvas.height/b_size*critter.posY;//yB;
 
 
 //console.log("drawRect called. Params: \nxB= "+ xB + "\nyB= "+yB+"\nsize= "+size);
 var ctx = canvas.getContext("2d");
 ctx.beginPath();
 ctx.rect(xCoord, yCoord, size, size);
-ctx.fillStyle = color;
+ctx.fillStyle = critter.color;
 ctx.fill();
 ctx.fillStyle = "black";
 ctx.font = "bold "+size/2+"px Arial";
 ctx.textAlign = "center";
 ctx.textBaseline = 'middle';
-ctx.fillText(orientation, xCoord+ size/2,yCoord + size /2);
+ctx.fillText(critter.orientation, xCoord+ size/2,yCoord + size /2);
 ctx.lineWidth = "4";
 ctx.strokeStyle = "black";
 ctx.stroke();
@@ -80,6 +80,14 @@ function refreshCanvas(canvas)
 {
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function redrawRects(canvas, boxsize, critterList)
+{
+  critterList.forEach((item, i) => {
+    drawRect(canvas, boxsize, item);
+  });
+
 }
 
 //Buttons
@@ -92,10 +100,11 @@ else {
 drawRect(canvas, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "B",color);
 }
 }
-function redraw(canvas, boxsize)
+function redraw(canvas, boxsize, critterList)
 {
   refreshCanvas(canvas);
   drawGrid(canvas, boxsize);
+  redrawRects(canvas, boxsize, critterList);
 }
 
 function randomInt(max)

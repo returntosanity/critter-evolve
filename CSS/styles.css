@@ -8,3 +8,7 @@
   font-weight: bold;
   visibility: hidden;
 }
+#autostop
+{
+  display: none;
+}

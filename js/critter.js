@@ -4,10 +4,12 @@ What does it mean to be a critter?
 class Critter {
 
 
-    constructor(x,y,direction) {
+    constructor(x,y,direction, color, name) {
       this.posX=x;
       this.posY=y;
       this.orientation=direction;
+      this.name=name;
+      this.color=color;
       this.steps=0;
 
       //basic movement
@@ -15,7 +17,7 @@ class Critter {
         if(this.orientation == "N"){
             if(this.posY == 0){
             //console.log("Ouch! Walked into a wall");
-            writeLog("Ouch! Walked into a wall");}
+            writeLog("Ouch! Walked into a wall", this);}
             else{
             this.posY--;
             this.steps++;
@@ -26,7 +28,7 @@ class Critter {
         if(this.orientation == "E"){
 			if(this.posX == w_width){
             //console.log("Ouch! Walked into a wall");
-          writeLog("Ouch! Walked into a wall");}
+          writeLog("Ouch! Walked into a wall", this);}
             else{
             this.posX++;
             this.steps++;
@@ -35,7 +37,7 @@ class Critter {
         if(this.orientation == "S"){
             if(this.posY == w_height){
             //console.log("Ouch! Walked into a wall");
-          writeLog("Ouch! Walked into a wall");}
+          writeLog("Ouch! Walked into a wall", this);}
             else{
             this.posY++;
             this.steps++;
@@ -44,7 +46,7 @@ class Critter {
         if(this.orientation == "W"){
 			if(this.posX == 0){
             //console.log("Ouch! Walked into a wall");
-          writeLog("Ouch! Walked into a wall");}
+          writeLog("Ouch! Walked into a wall", this);}
             else{
             this.posX--;
             this.steps++;
