@@ -1,9 +1,24 @@
 .AAA
 {
   float: left;
-  padding: 10px;
+  padding: 5px;
+}
+.additionalButtons
+{
+  visibility: hidden;
+}
+#log
+{
+  width: 250px;
+  border: 2px solid black;
+  visibility: hidden;
 }
 #logtitle
+{
+  font-weight: bold;
+  visibility: hidden;
+}
+#foodcount
 {
   font-weight: bold;
   visibility: hidden;
@@ -11,4 +26,27 @@
 #autostop
 {
   display: none;
+}
+#statscontainer
+{
+  background-color: greenyellow;
+  display: flex;
+  flex-wrap: wrap;
+  width: 600px;
+  visibility: hidden;
+}
+.statsitem
+{
+  background-color: lightgray;
+  padding: 5px;
+  border: 2px solid black;
+  float: left;
+  padding: 10px;
+  flex: 100px;
+}
+.statName
+{
+  font-weight: bold;
+  align-self: center;
+  background-color: yellow;
 }

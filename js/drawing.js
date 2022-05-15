@@ -1,17 +1,3 @@
-/*
-var world_size=670;
-var boxsize= 10;
-var posX=2;
-var posY=0;
-var boxes= document.getElementById("b_size").value;
-createCanvas(world_size, document.getElementById("test"));
-var c = document.getElementById("newCanvas");
-drawGrid(c, boxsize);
-drawRect(c, boxsize, posX, posY,"N", "red");
-drawRect(c, boxsize, 3, 3,"E", "green");
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R", "yellow");
-drawRect(c, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "R","yellow");
-*/
 function drawMap(size, boxsize, nodeId)
 {
 
@@ -53,24 +39,31 @@ drawLine(0,canvas.height/size*i,canvas.width,canvas.height/size*i);
 }
 }
 
-function drawRect(canvas, b_size, critter)//, xB, yB, orientation, color)
+function drawRect(canvas, b_size, gameObject)//, xB, yB, orientation, color)
 {
 var size= canvas.width/b_size;
-var xCoord = canvas.width/b_size*critter.posX;//xB;
-var yCoord = canvas.height/b_size*critter.posY;//yB;
+var xCoord = canvas.width/b_size*gameObject.posX;//xB;
+var yCoord = canvas.height/b_size*gameObject.posY;//yB;
 
 
 //console.log("drawRect called. Params: \nxB= "+ xB + "\nyB= "+yB+"\nsize= "+size);
 var ctx = canvas.getContext("2d");
 ctx.beginPath();
 ctx.rect(xCoord, yCoord, size, size);
-ctx.fillStyle = critter.color;
+ctx.fillStyle = gameObject.color;
 ctx.fill();
 ctx.fillStyle = "black";
 ctx.font = "bold "+size/2+"px Arial";
 ctx.textAlign = "center";
 ctx.textBaseline = 'middle';
-ctx.fillText(critter.orientation, xCoord+ size/2,yCoord + size /2);
+if(gameObject instanceof Critter)
+{
+  ctx.fillText(gameObject.orientation, xCoord+ size/2,yCoord + size /2);
+}
+if(gameObject instanceof Food)
+{
+  ctx.fillText("F", xCoord+ size/2,yCoord + size /2);
+}
 ctx.lineWidth = "4";
 ctx.strokeStyle = "black";
 ctx.stroke();
@@ -82,29 +75,20 @@ function refreshCanvas(canvas)
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function redrawRects(canvas, boxsize, critterList)
+function redrawRects(canvas, boxsize, gameObjectList)
 {
-  critterList.forEach((item, i) => {
+  gameObjectList.forEach((item, i) => {
     drawRect(canvas, boxsize, item);
   });
 
 }
 
-//Buttons
-function randomRect(canvas, boxsize, color)
-{
-  //console.log(boxsize);
-  if(boxsize.length > 0)
-{drawRect(canvas, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "A",color);}
-else {
-drawRect(canvas, boxsize, randomInt(boxsize-1), randomInt(boxsize-1), "B",color);
-}
-}
-function redraw(canvas, boxsize, critterList)
+
+function redraw(canvas, boxsize, gameObjectList)
 {
   refreshCanvas(canvas);
   //drawGrid(canvas, boxsize);
-  redrawRects(canvas, boxsize, critterList);
+  redrawRects(canvas, boxsize, gameObjectList);
 }
 
 function randomInt(max)

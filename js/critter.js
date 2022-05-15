@@ -11,6 +11,7 @@ class Critter {
       this.name=name;
       this.color=color;
       this.steps=0;
+      this.energy=100;
 
       //basic movement
       this.walk_forward = function(w_width, w_height){
@@ -21,9 +22,8 @@ class Critter {
             else{
             this.posY--;
             this.steps++;
+            this.energy--;
             }
-
-
         }
         if(this.orientation == "E"){
 			if(this.posX == w_width){
@@ -32,6 +32,7 @@ class Critter {
             else{
             this.posX++;
             this.steps++;
+            this.energy--;
             }
         }
         if(this.orientation == "S"){
@@ -41,6 +42,7 @@ class Critter {
             else{
             this.posY++;
             this.steps++;
+            this.energy--;
             }
         }
         if(this.orientation == "W"){
@@ -50,10 +52,13 @@ class Critter {
             else{
             this.posX--;
             this.steps++;
+            this.energy--;
             }
-
         }
-      };
+
+
+      };//walk_forward ends here
+      
       this.turn_right = function(){
         if(this.orientation == "N"){this.orientation= "E";}
         else if(this.orientation == "E"){this.orientation= "S";}
@@ -67,10 +72,14 @@ class Critter {
         else if(this.orientation == "W"){this.orientation= "S";}
       };
 
+      //actions
+      this.eatFood = function(food, gameObjectList, position){
+        this.energy= this.energy + food.nutrition;
+        gameObjectList.splice(position,1);
+
+      };
     }
 }
-    //actions
-    //basic movement
 
 
 /*
