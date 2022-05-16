@@ -3,6 +3,7 @@ The map/world in which the critters live
 */
 var size = 850;
 var boxsize=40;
+var canvas;
 var interval;
 var gameObjectList= [];
 var c1= new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "N", "red", "Player");
@@ -53,6 +54,7 @@ function start()
 {
   drawMap(size, boxsize, "map");
   document.getElementById("btnstart").hidden=true;
+  canvas=document.getElementById("newCanvas");
   drawRect(document.getElementById("newCanvas"), boxsize,c1);// c1.posX, c1.posY, c1.orientation, "red");
   redrawRects(document.getElementById("newCanvas"), boxsize,gameObjectList);
   document.getElementById("logtitle").style.visibility="visible";
@@ -246,4 +248,30 @@ function displayStats(gameObjectList)
 
     }
   });
+}
+
+function draw(e) {
+    var pos = getMousePos(canvas, boxsize, e);
+    var context= canvas.getContext("2d");
+    posx = pos.x;
+    console.log(posx);
+    posy = pos.y;
+    console.log(posy);
+
+    var drawx=canvas.width/boxsize*posx;
+    var drawy=canvas.height/boxsize*posy;
+    
+    context.fillStyle = "#000000";
+    context.fillRect(drawx, drawy, canvas.width/boxsize, canvas.height/boxsize);
+}
+window.addEventListener('mousedown', draw, false);
+
+function getMousePos(canvas,b_size, evt) {
+    var rect = canvas.getBoundingClientRect();
+    var intx=(evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
+    var inty=(evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
+    return {
+        x: Math.trunc(intx/canvas.width*b_size),
+        y: Math.trunc(inty/canvas.height*b_size)
+    };
 }
