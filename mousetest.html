@@ -1,0 +1,77 @@
+<body>
+https://jsfiddle.net/
+https://stackoverflow.com/questions/7223717/differentiating-0-and-0
+
+<div id="images"></div>
+<canvas style="border:1px solid #000000;margin:0;padding:0;position:relative;left:50px;top:50px;width:300px;height:300px" id="imgCanvas" width="300" height="300"></canvas>
+<script>
+var canvas = document.getElementById("imgCanvas");
+var boxsize = 20;
+var context = canvas.getContext("2d");
+
+
+function drawGrid(canvas, size) {
+  function drawLine(xB, yB, xE, yE) {
+    var ctx = canvas.getContext("2d");
+    ctx.lineWidth = "1";
+    ctx.beginPath();
+    ctx.moveTo(xB, yB);
+    ctx.lineTo(xE, yE);
+    ctx.stroke();
+    ctx.closePath();
+  }
+
+  for (let i = 0; i < size + 1; i++) {
+    drawLine(canvas.width / size * i, 0, canvas.width / size * i, canvas.height);
+  }
+
+
+  for (let i = 0; i < size + 1; i++) {
+    drawLine(0, canvas.height / size * i, canvas.width, canvas.height / size * i);
+  }
+}
+
+//drawGrid(canvas, boxsize);
+
+
+function drawHighlight(e) {
+  redraw();
+  var ctx = canvas.getContext("2d");
+  var pos = getMousePos(canvas, boxsize, e);
+  posx = pos.x;
+  posy = pos.y;
+
+  var drawx = canvas.width / boxsize * posx;
+  var drawy = canvas.height / boxsize * posy;
+  ctx.fillStyle = "green";
+  ctx.lineWidth = "3";
+  ctx.strokeStyle = "black";
+  //ctx.fillRect(drawx, drawy, canvas.width / boxsize, canvas.height / boxsize);
+  ctx.strokeRect(drawx, drawy, canvas.width / boxsize, canvas.height / boxsize);
+  
+
+  //ctx.stroke();
+}
+
+
+function redraw() {
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //drawGrid(canvas, boxsize);
+}
+
+canvas.addEventListener('mousemove', drawHighlight, false);
+canvas.addEventListener('mouseleave', redraw, false);
+
+function getMousePos(canvas, b_size, evt) {
+  var rect = canvas.getBoundingClientRect();
+  var intx = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
+  var inty = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
+  return {
+    x: Math.trunc(intx / canvas.width * b_size),
+    y: Math.trunc(inty / canvas.height * b_size)
+  };
+}
+
+</script>
+</body>
