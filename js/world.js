@@ -252,6 +252,7 @@ function displayStats(gameObjectList)
 
 function draw(e) {
     var pos = getMousePos(canvas, boxsize, e);
+    var context= canvas.getContext("2d");
     posx = pos.x;
     console.log(posx);
     posy = pos.y;
