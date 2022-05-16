@@ -11,7 +11,9 @@ class Critter {
       this.name=name;
       this.color=color;
       this.steps=0;
+      this.vision=10;
       this.energy=1000;
+      this.foodEaten=0;
 
       //basic movement
       this.walk_forward = function(w_width, w_height){
@@ -76,13 +78,95 @@ class Critter {
       this.eatFood = function(food, gameObjectList, position){
         this.energy= this.energy + food.nutrition;
         gameObjectList.splice(position,1);
+        this.foodEaten++;
 
       };
+
+      this.seeFood = function(gameObjectList, map_size){
+        let pointList= getCoordsForFieldOfView(this, map_size);
+        let sawfood=false;
+
+        pointList.forEach((point, i) => {
+          gameObjectList.forEach((gameObject, i) => {
+            if(point.x===gameObject.posX && point.y=== gameObject.posY && gameObject instanceof Food)
+            {
+              sawfood= true;
+            }
+
+          });
+
+        });
+        return sawfood;
+
+
+
+
+      };//see
     }
 }
 
+function getCoordsForFieldOfView(critter, map_size)
+{
+  var posx= critter.posX;
+  var posy= critter.posY;
+  var orientation= critter.orientation;
+  var viewField= [];
 
+  if(orientation == "N"){
+    if(posy === 0)
+    {
+      writeLog("Looking at a wall", critter);
+    }
+    else{
+      for(let i=1; i < critter.vision; i++)
+      {
+        viewField.push({x: posx , y: posy-i});
+      }
+    }
+  }
+  if(orientation === "E"){
+    if(posx === map_size)
+    {
+      writeLog("Looking at a wall", critter);
+    }
+    else
+    {
+      for(let i=1; i < critter.vision; i++)
+      {
+        viewField.push({x: posx+i , y: posy});
+      }
+    }
+  }
+  if(orientation === "S"){
+      if(posy === map_size){
+    writeLog("Looking at a wall", critter);}
+      else{
+      for(let i=1; i < critter.vision; i++)
+      {
+        viewField.push({x: posx , y: posy+i});
+      }
+      }
+  }
+  if(orientation === "W"){
+    if(posx === 0){
+    writeLog("Looking at a wall", this);}
+      else{
+      for(let i=1; i < critter.vision; i++)
+      {
+        viewField.push({x: posx-i , y: posy});
+      }
+      }
+  }
+  return viewField;
+
+
+}
 /*
+see
+get coords for field of view
+
+
+
 //properties ... determined by genes?
 var vision = 1; //how far a critter can see
 var sex= true; //true= male false= female

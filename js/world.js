@@ -94,22 +94,30 @@ function randomAction(critter)
   function randomIntFromInterval(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min)
   }
-
-  var rndInt = randomIntFromInterval(1, 6)
-  if(rndInt<=4)
+  let food= critter.seeFood(gameObjectList, size);
+  if(food===true)
   {
-    writeLog("decided to walk a bit",critter);
-  	walk(critter);
+    writeLog("spotted something yummy", critter);
+    walk(critter);
   }
-  if(rndInt==5)
+  else
   {
-    turnR(critter);
-    writeLog("decided to turn right",critter);
-  }
-  if(rndInt==6)
-  {
-    turnL(critter);
-    writeLog("decided to turn left",critter);
+    var rndInt = randomIntFromInterval(1, 6)
+    if(rndInt<=4)
+    {
+      writeLog("decided to walk a bit",critter);
+    	walk(critter);
+    }
+    if(rndInt==5)
+    {
+      turnR(critter);
+      writeLog("decided to turn right",critter);
+    }
+    if(rndInt==6)
+    {
+      turnL(critter);
+      writeLog("decided to turn left",critter);
+    }
   }
 }
 
@@ -215,10 +223,14 @@ function displayStats(gameObjectList)
       var statStepsP= document.createElement("p");
       statStepsP.className="statOther";
       statStepsP.innerText="Steps: "+item.steps;
+      var statFoodP= document.createElement("p");
+      statFoodP.className="statOther";
+      statFoodP.innerText="Eaten:"+item.foodEaten;
 
      statsItemDiv.appendChild(statsNameP);
      statsItemDiv.appendChild(statEnergyP);
      statsItemDiv.appendChild(statStepsP);
+     statsItemDiv.appendChild(statFoodP);
      document.getElementById("statscontainer").appendChild(statsItemDiv);
 
     }
