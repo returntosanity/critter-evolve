@@ -11,7 +11,7 @@ class Critter {
       this.name=name;
       this.color=color;
       this.steps=0;
-      this.energy=100;
+      this.energy=1000;
 
       //basic movement
       this.walk_forward = function(w_width, w_height){
@@ -58,7 +58,7 @@ class Critter {
 
 
       };//walk_forward ends here
-      
+
       this.turn_right = function(){
         if(this.orientation == "N"){this.orientation= "E";}
         else if(this.orientation == "E"){this.orientation= "S";}

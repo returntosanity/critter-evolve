@@ -15,13 +15,13 @@ gameObjectList.push(new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "E",
 gameObjectList.push(new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "E", "pink","Oscar"));
 gameObjectList.push(new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "E", "pink","Kevin"));
 gameObjectList.push(new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "E", "pink","Angela"));
-gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),10));
-gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),10));
-gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),10));
-gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),10));
-gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),10));
-gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),10));
-gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),10));
+gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),50));
+gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),60));
+gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),20));
+gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),100));
+gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),150));
+gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),20));
+gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),15));
 //keybindings
 document.addEventListener("keydown", readImput);
 
@@ -144,7 +144,7 @@ function autoStop()
 
 function addFood()
 {
-  gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),10));
+  gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),randomInt(300)));
   document.getElementById("foodcount").innerText="Number of Foods: "+countFood(gameObjectList);
   redraw(document.getElementById("newCanvas"), boxsize, gameObjectList);
   drawRect(document.getElementById("newCanvas"), boxsize,c1);
