@@ -6,7 +6,7 @@ var boxsize=40;
 var canvas;
 var interval;
 var gameObjectList= [];
-var c1= new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "N", "red", "Player");
+gameObjectList.push(new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "N", "red", "Player"));
 gameObjectList.push(new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "S", "yellow", "Jim"));
 gameObjectList.push(new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "W", "yellow","Pam"));
 gameObjectList.push(new Critter(randomInt(boxsize-1), randomInt(boxsize-1), "E", "yellow","Dwight"));
@@ -29,19 +29,19 @@ document.addEventListener("keydown", readImput);
 function readImput(e){
   if(e.code=="ArrowUp" || e.code=="KeyW")
   {
-    walk(c1);
+    walk(gameObjectList[0]);
   }
   if(e.code=="ArrowLeft" || e.code=="KeyA")
   {
-    turnL(c1);
+    turnL(gameObjectList[0]);
   }
   if(e.code=="ArrowRight" || e.code=="KeyD")
   {
-    turnR(c1);
+    turnR(gameObjectList[0]);
   }
   if(e.code=="KeyR")
   {
-    randomAction(c1);
+    randomAction(gameObjectList[0]);
   }
   if(e.code=="KeyF")
   {
@@ -55,7 +55,6 @@ function start()
   drawMap(size, boxsize, "map");
   document.getElementById("btnstart").hidden=true;
   canvas=document.getElementById("newCanvas");
-  drawRect(document.getElementById("newCanvas"), boxsize,c1);// c1.posX, c1.posY, c1.orientation, "red");
   redrawRects(document.getElementById("newCanvas"), boxsize,gameObjectList);
   document.getElementById("logtitle").style.visibility="visible";
   document.getElementById("foodcount").style.visibility="visible";
@@ -64,7 +63,10 @@ function start()
   document.getElementById("log").style.visibility="visible";
   document.querySelectorAll('.additionalButtons').forEach(e => e.style.visibility="visible");
   displayStats(gameObjectList);
-  autoStart();
+//  autoStart();
+  canvas.addEventListener('mousedown', mouseDropFood, false);
+  canvas.addEventListener('mousemove', mouseDrawHighlight, false);
+  canvas.addEventListener('mouseleave', function (){redraw(document.getElementById("newCanvas"), boxsize, gameObjectList);}, false);
 }
 
 function walk(critter)
@@ -72,25 +74,19 @@ function walk(critter)
   critter.walk_forward(boxsize-1, boxsize-1);
   checkPosition(critter,gameObjectList);
   redraw(document.getElementById("newCanvas"), boxsize,gameObjectList);
-  drawRect(document.getElementById("newCanvas"), boxsize, critter);//c1.posX, c1.posY, c1.orientation, "red");
   displayStats(gameObjectList);
-  //console.log(c1);
 }
 
 function turnR(critter)
 {
   critter.turn_right();
   redraw(document.getElementById("newCanvas"), boxsize, gameObjectList);
-  drawRect(document.getElementById("newCanvas"), boxsize, critter);//c1.posX, c1.posY, c1.orientation, "red");
-  //console.log(c1);
 }
 
 function turnL(critter)
 {
   critter.turn_left();
   redraw(document.getElementById("newCanvas"), boxsize, gameObjectList);
-  drawRect(document.getElementById("newCanvas"), boxsize, critter);//c1.posX, c1.posY, c1.orientation, "red");
-  //console.log(c1);
 }
 
 function randomAction(critter)
@@ -99,34 +95,32 @@ function randomAction(critter)
   return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
-var rndInt = randomIntFromInterval(1, 6)
-//console.log(rndInt)
-if(rndInt<=4)
-{
-	//console.log("decided to walk a bit")
-  writeLog("decided to walk a bit",critter);
-	walk(critter);
-}
-if(rndInt==5)
-{turnR(critter);
-//console.log("decided to turn right");
-writeLog("decided to turn right",critter);}
-if(rndInt==6)
-{turnL(critter);
-//console.log("decided to turn left");
-writeLog("decided to turn left",critter);}
-
+  var rndInt = randomIntFromInterval(1, 6)
+  if(rndInt<=4)
+  {
+    writeLog("decided to walk a bit",critter);
+  	walk(critter);
+  }
+  if(rndInt==5)
+  {
+    turnR(critter);
+    writeLog("decided to turn right",critter);
+  }
+  if(rndInt==6)
+  {
+    turnL(critter);
+    writeLog("decided to turn left",critter);
+  }
 }
 
 function randomActions(gameObjectList)
 {
   gameObjectList.forEach((item, i) => {
-    if(item instanceof Critter)
+    if(item instanceof Critter && i>0)
     {
       randomAction(item);
     }
   });
-  drawRect(document.getElementById("newCanvas"), boxsize,c1);
 }
 
 function autoStart()
@@ -139,7 +133,7 @@ function autoStart()
 function autoStop()
 {
   clearInterval(interval);
-  writeLog("stopped",c1);
+  writeLog("stopped");
   document.getElementById("autostart").style.display="inline";
   document.getElementById("autostop").style.display="none";
 }
@@ -149,7 +143,6 @@ function addFood()
   gameObjectList.push(new Food(randomInt(boxsize-1), randomInt(boxsize-1),randomInt(300)));
   document.getElementById("foodcount").innerText="Number of Foods: "+countFood(gameObjectList);
   redraw(document.getElementById("newCanvas"), boxsize, gameObjectList);
-  drawRect(document.getElementById("newCanvas"), boxsize,c1);
 }
 
 function countFood(gameObjectList)
@@ -171,16 +164,22 @@ function randomInt(max)
 
 function writeLog(message, critter)
 {
-  //critter=c1;
   let myelem= document.createElement("p");
   myelem.className="logmessage";
-  myelem.innerText= critter.name +" "+ message;
-  var logdiv= document.getElementById("log");
-  if(logdiv.childElementCount>=14)
-  {
-    logdiv.removeChild(logdiv.children[2]);
+  if(critter instanceof Critter){
+    myelem.innerHTML= "<b>"+ critter.name +"</b> "+ message;
+    myelem.style.backgroundColor= critter.color;
   }
-  logdiv.appendChild(myelem);
+  else
+  {
+    myelem.innerText= message;
+  }
+  var logdiv= document.getElementById("logcontainer");
+  if(logdiv.childElementCount>=140)
+  {
+    logdiv.removeChild(logdiv.lastChild);
+  }
+  logdiv.insertBefore(myelem,logdiv.childNodes[0]);
 }
 
 function checkPosition(gameObject, gameObjectList)
@@ -188,39 +187,20 @@ function checkPosition(gameObject, gameObjectList)
   gameObjectList.forEach((item, i) => {
     if(item instanceof Food && item.posX== gameObject.posX && item.posY== gameObject.posY)
     {
-      //eat food - increase energy, remove food item from gameobject list
       gameObject.eatFood(item, gameObjectList, i);
       document.getElementById("foodcount").innerText="Number of Foods: "+countFood(gameObjectList);
-      writeLog("munched food", gameObject);
+      writeLog("munched food with "+item.nutrition+" nutrition", gameObject);
     }
   });
 }
 
 function displayStats(gameObjectList)
 {
-  //document.getElementById("statscontainer").children.forEach()
   //first, remove all statsitems so we're not fucking ourselves.
   document.querySelectorAll('.statsitem').forEach(e => e.remove());
 
-  var statsItemDiv= document.createElement("div");
-  statsItemDiv.className="statsitem";
-  var statsNameP= document.createElement("p");
-  statsNameP.className="statName";
-  statsNameP.innerText=c1.name;
-  statsNameP.style.backgroundColor=c1.color;
-  var statEnergyP = document.createElement("p");
-  statEnergyP.className="statOther";
-  statEnergyP.innerText= "Energy: "+c1.energy;
-  var statStepsP= document.createElement("p");
-  statStepsP.className="statOther";
-  statStepsP.innerText="Steps: "+c1.steps;
- statsItemDiv.appendChild(statsNameP);
- statsItemDiv.appendChild(statEnergyP);
- statsItemDiv.appendChild(statStepsP);
- document.getElementById("statscontainer").appendChild(statsItemDiv);
-
   gameObjectList.forEach((item, i) => {
-    if(item instanceof Critter)
+    if(item instanceof Critter && item.energy>0)
     {
       //create div fill with stats add to stats div
       var statsItemDiv= document.createElement("div");
@@ -235,12 +215,7 @@ function displayStats(gameObjectList)
       var statStepsP= document.createElement("p");
       statStepsP.className="statOther";
       statStepsP.innerText="Steps: "+item.steps;
-      /* <div id="statscontainer" class="AAA">
-            <div class="statsitem">
-              <p class="statName">Dummy</p>
-              <p class="statOther">Energy:</p>
-              <p class="statOther">Steps:</p>
-            </div>*/
+
      statsItemDiv.appendChild(statsNameP);
      statsItemDiv.appendChild(statEnergyP);
      statsItemDiv.appendChild(statStepsP);
@@ -250,21 +225,31 @@ function displayStats(gameObjectList)
   });
 }
 
-function draw(e) {
+function mouseDropFood(e) {
     var pos = getMousePos(canvas, boxsize, e);
-    var context= canvas.getContext("2d");
     posx = pos.x;
-    console.log(posx);
     posy = pos.y;
-    console.log(posy);
+    var newFood= new Food(posx, posy,randomInt(300))
+    gameObjectList.push(newFood);
+    writeLog("dropped food with "+newFood.nutrition+" nutrition");
+    document.getElementById("foodcount").innerText="Number of Foods: "+countFood(gameObjectList);
+    redraw(document.getElementById("newCanvas"), boxsize, gameObjectList);
 
-    var drawx=canvas.width/boxsize*posx;
-    var drawy=canvas.height/boxsize*posy;
-    
-    context.fillStyle = "#000000";
-    context.fillRect(drawx, drawy, canvas.width/boxsize, canvas.height/boxsize);
 }
-window.addEventListener('mousedown', draw, false);
+function mouseDrawHighlight(e) {
+  redraw(document.getElementById("newCanvas"), boxsize, gameObjectList);
+  var ctx = canvas.getContext("2d");
+  var pos = getMousePos(canvas, boxsize, e);
+  posx = pos.x;
+  posy = pos.y;
+
+  var drawx = canvas.width / boxsize * posx;
+  var drawy = canvas.height / boxsize * posy;
+  ctx.fillStyle = "green";
+  ctx.lineWidth = "3";
+  ctx.strokeStyle = "grey";
+  ctx.strokeRect(drawx, drawy, canvas.width / boxsize, canvas.height / boxsize);
+}
 
 function getMousePos(canvas,b_size, evt) {
     var rect = canvas.getBoundingClientRect();

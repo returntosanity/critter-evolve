@@ -10,6 +10,7 @@
 #log
 {
   width: 250px;
+  height: 850px;
   border: 2px solid black;
   visibility: hidden;
 }
@@ -17,11 +18,18 @@
 {
   font-weight: bold;
   visibility: hidden;
+  margin-top: 10px;
+}
+#logcontainer
+{
+  height: 760px;
+  overflow: auto;
 }
 #foodcount
 {
   font-weight: bold;
   visibility: hidden;
+  margin-top: 10px;
 }
 #autostop
 {

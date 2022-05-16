@@ -12,11 +12,11 @@
   <div class="controls">
 
 <button id= "btnstart" type="button" name="start" onclick="start()">Start ... click here, stuff happens when you click here!</button>
-  <button class="additionalButtons" type="button" name="button" onclick="walk(c1)">Walk</button>
-  <button class="additionalButtons" type="button" name="button3" onclick="turnL(c1)">Left</button>
-  <button class="additionalButtons" type="button" name="button2" onclick="turnR(c1)">Right</button>
-  <button class="additionalButtons" type="button" name="button4" onclick="randomAction(c1)">Random</button>
-  <button class="additionalButtons" type="button" name="button4" onclick="addFood()">Drop Food</button>
+  <button class="additionalButtons" type="button" name="button" onclick="walk(gameObjectList[0])">Walk (W)</button>
+  <button class="additionalButtons" type="button" name="button3" onclick="turnL(gameObjectList[0])">Left (S)</button>
+  <button class="additionalButtons" type="button" name="button2" onclick="turnR(gameObjectList[0])">Right (D)</button>
+  <button class="additionalButtons" type="button" name="button4" onclick="randomAction(gameObjectList[0])">Random (R)</button>
+  <button class="additionalButtons" type="button" name="button4" onclick="addFood()">Drop Food (F)</button>
   <button class="additionalButtons" id="autostart" type="button" name="autoStart" onclick="autoStart()">Start Auto</button>
   <button class="additionalButtons" id="autostop" type="button" name="autoStop" onclick="autoStop()">Stop Auto</button>
 </div>
@@ -27,6 +27,8 @@
     <div id="log" class="AAA">
       <p id= "logtitle">Log:</p>
       <p id= "foodcount">Number of Foods: </p>
+      <div id="logcontainer">
+      </div>
     </div>
     <div id="statscontainer" class="AAA">
       <!--<div class="statsitem">
